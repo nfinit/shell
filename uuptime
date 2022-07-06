@@ -1,8 +1,7 @@
 #!/bin/sh
 . /usr/shell/_utilities
 #------------------------------------------------------------------------------
-# 2022-07-06
-# Adds a unique user count to the standard uptime command output
+# uuptime - uptime with unique user count for system status reporting
 #------------------------------------------------------------------------------
 USER_COUNT=$(count_unique_users)
 if [ $USER_COUNT -eq 1 ]; then
