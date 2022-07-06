@@ -1,7 +1,7 @@
 #!/bin/sh
 . /usr/shell/_utilities
 #------------------------------------------------------------------------------
-# ri - multiprotocol Remote Interactive login system for the NTS
+# ria - multiprotocol Remote Interactive Access system for the NTS
 #------------------------------------------------------------------------------
 TITLE="*** NTS Remote Interactive Access ***"
 TIMESTAMP=$(text_remove_excess_spaces "$(date)")
