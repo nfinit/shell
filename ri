@@ -1,0 +1,90 @@
+#!/bin/sh
+. /usr/shell/_utilities
+#------------------------------------------------------------------------------
+# 2022-07-06
+# Attempts to connect to the host via remote shell
+#------------------------------------------------------------------------------
+TITLE="*** NTS Remote Interactive Access ***"
+TIMESTAMP=$(text_remove_excess_spaces "$(date)")
+SSH_PORT=22
+SSH_CLIENT=$(which ssh 2>/dev/null)
+USE_SSH=$?
+TELNET_PORT=23
+TELNET_CLIENT=$(which telnet 2>/dev/null)
+USE_TELNET=$?
+#------------------------------------------------------------------------------
+
+# Argument parsing
+# ~~~~~~~~~~~~~~~~
+
+if [ "$#" -lt 1 ]; then
+  echo "Please specify a registered hostname or address."
+  exit
+fi
+clear 2>/dev/null
+
+TARGET_SYSTEM="$1"
+if [ "$2" ]; then
+  CONNECT_USER="$2"
+else
+  CONNECT_USER="$USER"
+fi
+
+printf "$TITLE\n" 
+printf "Time..... $TIMESTAMP\n"
+printf "System... "
+term_msg_bold "$TARGET_SYSTEM\n"
+
+# System check
+# ~~~~~~~~~~~~
+
+printf "Status... "
+HOST_STATUS=$(check_host_alive "$TARGET_SYSTEM")
+if [ "$HOST_STATUS" -eq 0 ]; then
+  term_msg_ok "online\n"
+elif [ "$HOST_STATUS" -eq 1 ]; then
+  term_msg_error "offline\n"
+else
+  term_msg_warn "indeterminate\n"
+fi
+
+if [ "$HOST_STATUS" -ne 0 ]; then
+  echo "Check target address or network connection."
+  exit
+fi
+
+# Service checks
+# ~~~~~~~~~~~~~~
+
+if [ "$USE_SSH" -eq 0 ]; then
+  printf "SSH...... "
+  SSH_STATUS=$(check_host_port "$TARGET_SYSTEM" $SSH_PORT)
+  if [ "$SSH_STATUS" -eq 0 ]; then
+    term_msg_ok "online\n"
+  elif [ "$SSH_STATUS" -eq 1 ]; then
+    term_msg_warn "offline\n"
+  fi
+fi
+
+if [ "$USE_TELNET" -eq 0 ]; then
+  printf "Telnet... "
+  TELNET_STATUS=$(check_host_port "$TARGET_SYSTEM" $TELNET_PORT)
+  if [ "$TELNET_STATUS" -eq 0 ]; then
+    term_msg_ok "online\n"
+  elif [ "$TELNET_STATUS" -eq 1 ]; then
+    term_msg_warn "offline\n"
+  fi
+fi
+
+# Remote logon
+# ~~~~~~~~~~~~
+
+if [ "$USE_SSH" -eq 0 ] && [ "$SSH_STATUS" -eq 0 ]; then
+  echo "Initiating secure shell connection..."
+  $SSH_CLIENT $CONNECT_USER@$TARGET_SYSTEM
+elif [ "$USE_TELNET" -eq 0 ] && [ "$TELNET_STATUS" -eq 0 ]; then
+  echo "Initiating telnet connection..."
+  $TELNET_CLIENT -l $CONNECT_USER $TARGET_SYSTEM
+else 
+  echo "Remote interactive services are currently unavailable on this system."
+fi

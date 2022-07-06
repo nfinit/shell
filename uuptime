@@ -1,0 +1,14 @@
+#!/bin/sh
+. /usr/shell/_utilities
+#------------------------------------------------------------------------------
+# 2022-07-06
+# Adds a unique user count to the standard uptime command output
+#------------------------------------------------------------------------------
+USER_COUNT=$(count_unique_users)
+if [ $USER_COUNT -eq 1 ]; then
+  OUT=$(uptime | sed "s/ users,/ sessions, $USER_COUNT user,/g")
+else
+  OUT=$(uptime | sed "s/ users,/ sessions, $USER_COUNT users,/g")
+fi
+OUT=$(text_remove_excess_spaces "$OUT")
+echo $OUT
