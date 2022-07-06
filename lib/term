@@ -1,0 +1,39 @@
+#!/bin/sh
+#-----------------------------------------------------------------------------
+# NTS shell utilities standard library for terminal output
+#-----------------------------------------------------------------------------
+
+check_term () {
+  echo 0
+}
+
+term_msg () {
+  printf "$1"
+}
+
+term_msg_bold () {
+  tput bold 2>/dev/null
+  printf "$1"
+  tput sgr0 2>/dev/null
+}
+
+term_msg_ok () {
+  tput bold 2>/dev/null
+  tput setaf 2 2>/dev/null
+  printf "$1"
+  tput sgr0 2>/dev/null
+}
+
+term_msg_warn () {
+  tput bold 2>/dev/null
+  tput setaf 3 2>/dev/null
+  printf "$1"
+  tput sgr0 2>/dev/null
+}
+
+term_msg_error () {
+  tput bold 2>/dev/null
+  tput setaf 1 2>/dev/null
+  printf "$1"
+  tput sgr0 2>/dev/null
+}

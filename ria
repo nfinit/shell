@@ -1,10 +1,12 @@
 #!/bin/sh
-. /usr/shell/_utilities
+. /usr/shell/lib/net
+. /usr/shell/lib/term
+. /usr/shell/lib/util
 #------------------------------------------------------------------------------
 # ria - multiprotocol Remote Interactive Access system for the NTS
 #------------------------------------------------------------------------------
 TITLE="*** NTS Remote Interactive Access ***"
-TIMESTAMP=$(text_remove_excess_spaces "$(date)")
+TIMESTAMP=$(nts_timestamp)
 SSH_PORT=22
 SSH_CLIENT=$(which ssh 2>/dev/null)
 USE_SSH=$?

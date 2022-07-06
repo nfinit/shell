@@ -1,6 +1,6 @@
 #!/bin/sh
 #-----------------------------------------------------------------------------
-# NTS shell utilities standard library
+# NTS shell utilities standard library for networking
 #-----------------------------------------------------------------------------
 PING_BINARY=$(which ping 2>/dev/null)
 USE_PING=$?
@@ -8,49 +8,6 @@ FPING_BINARY=$(which fping 2>/dev/null)
 USE_FPING=$?
 FPING_TIMEOUT_MS=100
 #-----------------------------------------------------------------------------
-
-check_term () {
-  echo 0
-}
-
-term_msg () {
-  printf "$1"
-}
-
-term_msg_bold () {
-  tput bold 2>/dev/null
-  printf "$1"
-  tput sgr0 2>/dev/null
-}
-
-term_msg_ok () {
-  tput bold 2>/dev/null
-  tput setaf 2 2>/dev/null
-  printf "$1"
-  tput sgr0 2>/dev/null
-}
-
-term_msg_warn () {
-  tput bold 2>/dev/null
-  tput setaf 3 2>/dev/null
-  printf "$1"
-  tput sgr0 2>/dev/null
-}
-
-term_msg_error () {
-  tput bold 2>/dev/null
-  tput setaf 1 2>/dev/null
-  printf "$1"
-  tput sgr0 2>/dev/null
-}
-
-unique_users () {
-  users | sed 's/ /\n/g' | uniq
-}
-
-count_unique_users () {
-  unique_users | wc -l
-}
 
 check_host_alive () {
   if [ "$USE_FPING" -eq 0 ]; then
@@ -74,8 +31,4 @@ check_host_port () {
     echo $?
     return $?
   fi
-}
-
-text_remove_excess_spaces () {
-  echo "$1" | sed "s/  */ /g"
 }

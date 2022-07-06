@@ -1,0 +1,16 @@
+#!/bin/sh
+#-----------------------------------------------------------------------------
+# NTS shell utilities general standard library
+#-----------------------------------------------------------------------------
+
+unique_users () {
+  users | sed 's/ /\n/g' | uniq
+}
+
+count_unique_users () {
+  unique_users | wc -l
+}
+
+nts_timestamp () {
+  date | sed 's/  */ /g'
+}

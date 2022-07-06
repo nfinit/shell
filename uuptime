@@ -1,5 +1,5 @@
 #!/bin/sh
-. /usr/shell/_utilities
+. /usr/shell/lib/util
 #------------------------------------------------------------------------------
 # uuptime - uptime with unique user count for system status reporting
 #------------------------------------------------------------------------------
@@ -9,5 +9,4 @@ if [ $USER_COUNT -eq 1 ]; then
 else
   OUT=$(uptime | sed "s/ users,/ sessions, $USER_COUNT users,/g")
 fi
-OUT=$(text_remove_excess_spaces "$OUT")
-echo $OUT
+echo $OUT | sed 's/  */ /g'
