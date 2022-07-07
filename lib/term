@@ -3,14 +3,6 @@
 # NTS shell utilities standard library for terminal output
 #-----------------------------------------------------------------------------
 
-check_term () {
-  echo 0
-}
-
-term_msg () {
-  printf "$1"
-}
-
 term_msg_bold () {
   tput bold 2>/dev/null
   printf "$1"
