@@ -1,0 +1,12 @@
+#!/bin/sh
+. /usr/shell/lib/util
+#------------------------------------------------------------------------------
+# cstat - system status report 
+# This is a simple script intended to provide a short status report of the
+# system using existing tools. It is recommended to change the contents to
+# match the requirements of your specific site.
+#------------------------------------------------------------------------------
+PATH=$PATH:/usr/shell
+#------------------------------------------------------------------------------
+uuptime
+iostat -c | tail -n +3 | tac | tail -n +4 | tac
