@@ -1,0 +1,6 @@
+#!/bin/sh
+. /usr/shell/lib/net
+#------------------------------------------------------------------------------
+# check_alive - wrapper for check_host_alive() standard library function
+#------------------------------------------------------------------------------
+check_host_alive $1
