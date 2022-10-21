@@ -1,0 +1,10 @@
+# User profile for NTS Shell Menu
+# Copy to $HOME/shell/menu.profile to customize your menu
+PS3="#? "
+EDITOR="$EDITOR"
+WWW_BROWSER="lynx"
+MAIL_CLIENT="alpine"
+# Add new options by adding to USER_ACTIONS and USER_ACTION_COMMANDS:
+# USER_ACTIONS+=("Calculator")
+# USER_ACTION_COMMANDS+=("bc --version; bc")
+USER_SCRIPT="$HOME/shell/menu.sh" # Create this script to run commands on menu start

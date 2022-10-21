@@ -1,7 +1,2 @@
-PS3="===>"
 SPLASH_FILE="/etc/splash"
 USER_MENU_PROFILE="~/shell/menu.profile"
-# Default applications
-EDITOR="$EDITOR"
-WWW_BROWSER="lynx"
-MAIL_CLIENT="alpine"

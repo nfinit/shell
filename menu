@@ -3,8 +3,9 @@
 # Environment load
 ###############################################################
 . /usr/shell/lib/menu/environment
-. /usr/shell/lib/menu/standard_actions
+. /usr/shell/lib/menu/default_profile
 [ -f "$HOME/shell/menu.profile" ] && . $HOME/shell/menu.profile
+. /usr/shell/lib/menu/standard_actions
 ###############################################################
 
 ACTIONS+=("${USER_ACTIONS[@]}")
