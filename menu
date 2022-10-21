@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# Environment load
+###############################################################
+. /usr/shell/lib/menu/environment
+. /usr/shell/lib/menu/standard_actions
+[ -f "$HOME/shell/menu.profile" ] && . $HOME/shell/menu.profile
+###############################################################
+
+ACTIONS+=("${USER_ACTIONS[@]}")
+ACTIONS+=("${STD_ACTIONS[@]}")
+ACTION_COMMANDS=("")
+ACTION_COMMANDS+=("${USER_ACTION_COMMANDS[@]}")
+ACTION_COMMANDS+=("${STD_ACTION_COMMANDS[@]}")
+
+while true; do
+  clear
+  [ -f "$SPLASH_FILE" ] && cat  "$SPLASH_FILE"
+  [ -f "$MOTD_FILE" ]   && cat  "$MOTD_FILE"
+  [ -f "$USER_SCRIPT" ] && eval "$USER_SCRIPT"
+  echo "Select an action:"
+  select ACTION in "${ACTIONS[@]}"; do
+    [[ ! "$REPLY" =~ ^[0-9]+$ ]] && echo "Please enter a number selection." && continue
+    clear
+    eval "${ACTION_COMMANDS[$REPLY]}"
+    break
+  done
+done 

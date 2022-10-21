@@ -1,0 +1,29 @@
+# Get editor
+if [ ! -z "$EDITOR" ]; then
+  STD_ACTIONS+=("Editor")
+  STD_ACTION_COMMANDS+=("$EDITOR")
+fi 
+
+# Get WWW browser
+if [ ! -z "$WWW_BROWSER" ]; then
+  STD_ACTIONS+=("World Wide Web")
+  STD_ACTION_COMMANDS+=("$WWW_BROWSER")
+fi
+
+# Get Mail client
+if [ ! -z "$MAIL_CLIENT" ]; then
+  STD_ACTIONS+=("Electronic Mail")
+  STD_ACTION_COMMANDS+=("$MAIL_CLIENT")
+fi
+
+# Menu exit
+menu_preexit () {
+  clear
+  [ -f "$SPLASH_FILE" ] && cat "$SPLASH_FILE"
+  if [ "$(which $(basename ${0}))" != "" ]; then 
+    echo "Issue the \"$(basename ${0})\" command to return to the interactive menu"
+  fi
+}
+
+STD_ACTIONS+=("Exit")
+STD_ACTION_COMMANDS+=("menu_preexit; exit 0")

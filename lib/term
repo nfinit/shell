@@ -11,6 +11,26 @@ term_set_title () {
   printf "\033]0;${1}\007"
 }
 
+term_hr () {
+  HR_MAX="------------------------------------------------------------------------------"
+  HR_MAX_WIDTH=79
+  [ ! -z "$TERM" ] && [ $(which tput) ] && TERM_WIDTH=$(tput cols)
+  if [ "$TERM_WIDTH" -gt "$HR_MAX_WIDTH" ]; then
+    echo $HR_MAX
+  elif [ "$TERM_WIDTH" -gt 1 ]; then
+    HR=""
+    CURRENT_CHARACTER=1
+    while [ "$CURRENT_CHARACTER" -lt "$TERM_WIDTH" ]; do
+      HR="$HR$HR_CHAR"
+      CURRENT_CHARACTER=`expr $CURRENT_CHARACTER +1`
+    done
+    echo $HR
+  else
+    echo $HR_MAX
+  fi
+  return 0  
+}
+
 term_msg_bold () {
   tput bold 2>/dev/null
   printf "$1"
