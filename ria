@@ -15,6 +15,17 @@ TELNET_CLIENT=$(which telnet 2>/dev/null)
 USE_TELNET=$?
 #------------------------------------------------------------------------------
 
+ria_exit () { 
+  term_set_title ""; 
+  term_reset_color; 
+  exit; 
+}
+
+trap ria_exit INT;
+trap ria_exit TERM;
+
+term_set_title "ria"
+
 # Argument parsing
 # ~~~~~~~~~~~~~~~~
 
@@ -80,12 +91,28 @@ fi
 # Remote logon
 # ~~~~~~~~~~~~
 
+if [ "$2" ]; then TITLE_STRING="$CONNECT_USER@"; fi
+TITLE_STRING="${TITLE_STRING}${TARGET_SYSTEM}"
+
 if [ "$USE_SSH" -eq 0 ] && [ "$SSH_STATUS" -eq 0 ]; then
   echo "Initiating secure shell connection..."
+  TITLE_STRING="${TITLE_STRING}"
+  term_set_title "ssh:${TITLE_STRING}"
   $SSH_CLIENT $CONNECT_USER@$TARGET_SYSTEM
-elif [ "$USE_TELNET" -eq 0 ] && [ "$TELNET_STATUS" -eq 0 ]; then
-  echo "Initiating telnet connection..."
-  $TELNET_CLIENT -l $CONNECT_USER $TARGET_SYSTEM
-else 
-  echo "Remote interactive services are currently unavailable on this system."
+  term_set_title ""
+  if [ "$?" -eq 0 ]; then
+    return 0
+  fi
 fi
+if [ "$USE_TELNET" -eq 0 ] && [ "$TELNET_STATUS" -eq 0 ]; then
+  echo "Initiating telnet connection..."
+  TITLE_STRING="${TITLE_STRING}"
+  term_set_title "telnet:${TITLE_STRING}"
+  $TELNET_CLIENT -l $CONNECT_USER $TARGET_SYSTEM
+  term_set_title ""
+  if [ "$?" -eq 0 ]; then
+    return 0
+  fi
+fi
+
+term_set_title ""

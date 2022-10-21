@@ -3,6 +3,14 @@
 # NTS shell utilities standard library for terminal output
 #-----------------------------------------------------------------------------
 
+term_reset_color () {
+  tput sgr0 2>/dev/null
+}
+
+term_set_title () {
+  printf "\033]0;${1}\007"
+}
+
 term_msg_bold () {
   tput bold 2>/dev/null
   printf "$1"

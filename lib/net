@@ -6,7 +6,7 @@ PING_BINARY=$(which ping 2>/dev/null)
 USE_PING=$?
 FPING_BINARY=$(which fping 2>/dev/null)
 USE_FPING=$?
-FPING_TIMEOUT_MS=100
+FPING_TIMEOUT_MS=500
 #-----------------------------------------------------------------------------
 
 check_host_alive () {
